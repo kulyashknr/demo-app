@@ -3,6 +3,7 @@ from rest_framework import mixins
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 
 from .models import Article
 from .serializers import ArticleSerializer
@@ -17,6 +18,7 @@ class ArticleViewSet(mixins.CreateModelMixin,
                     mixins.ListModelMixin):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+    parser_classes = (MultiPartParser, FormParser, JSONParser,)
 
     @action(methods=['POST'], detail=False)
     def perform_create(self, serializer):

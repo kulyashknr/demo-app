@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  nginx:
+
+    restart: always
+    image: nginx:latest
+    expose:
+    - 8080
+    ports:
+    - "80:8080"
+    volumes:
+    - ./demo/static:/code/static
+    - ./demo/media:/code/media
+    - ./demo/logs:/code/logs
+    - ./nginx:/etc/nginx/conf.d
+    depends_on:
+    - web
+
+  web:
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: django_db
+      POSTGRES_PASSWORD: 1
+      POSTGRES_USER: kkk
+    ports:
+    - "5433:5432"
+

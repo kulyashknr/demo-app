@@ -6,4 +6,3 @@ WORKDIR /code
 COPY . /code
 RUN pip install -r requirements.txt
 
-CMD gunicorn demo.wsgi:application --bind 0.0.0.0:$PORT

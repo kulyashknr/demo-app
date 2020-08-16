@@ -1,1 +1,1 @@
-web: docker-compose build
+web: python3 manage.py runserver
